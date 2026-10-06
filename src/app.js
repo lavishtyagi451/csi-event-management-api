@@ -1,17 +1,10 @@
+const express = require("express");
+const eventRoutes = require("./routes/eventRoutes");
 
-const express = require('express');
 const app = express();
 
 app.use(express.json());
 
-app.get('/',(req,res) =>{
-
-    res.json({
-
-        success: true,
-        message: 'event management api is running'
-
-    });
-});
+app.use(eventRoutes);
 
 module.exports = app;

@@ -1,15 +1,19 @@
  const express = require('express');
+ const Event = require('../models/eventModel'); 
+const router = express.Router();
 
- const app =  express();
-
- app.use(express.json());
  //middleware to parse urlencoded data
-app.use(express.urlencoded({ extended: true }));
+router.use(express.urlencoded({ extended: true }));
 
  // routes
 
  // event routes
- app.post('/api/events',(req,res) =>{
+ router.get('/api',(req,res) =>{
+
+     res.send("Welcome to the Event Management API");
+ });
+
+ router.post('/api/events',async(req,res) =>{
 
     const event = req.body;
     console.log(event);
@@ -34,19 +38,21 @@ app.use(express.urlencoded({ extended: true }));
     });
 }
 
-    else{
+    const savedEvent = await Event.create(event);
     res.status(201).json({
         message: "event created successfully",
-        event: event
+        event: savedEvent
     });
-}
+    
+})
+
+    
 
 
- });
-
- 
 
 
- app.listen(5000, () =>{
-    console.log('server running on port 5000');
- });
+     
+
+
+
+module.exports = router;
